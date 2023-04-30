@@ -1,52 +1,59 @@
 import './App.css'
-//import data from './data/weather-api.json'
+import backupData from './data/weather-api.json'
 import Dashboard from './components/dashboard/dashboard'
 import TopNav from './components/topNav/TopNav'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-function getData() {
-  const key = 'YTFlM2ExMWM1N2ZkMGRiMzM2NmMyYW'
-  const proxy = 'https://gentle-reef-68268.herokuapp.com'
-  const endpoint = 'https://api.willyweather.com.au/v2'
-  const goldenBeach = '6871'
-  const requestType = `tides,wind,sunrisesunset,uv,weather,rainfall`
-  const period = 7
-  const today = new Date()
-  const year = today.getFullYear()
-  const month = today.getMonth() + 1
-  const date = today.getDate()
-  const todayDate = `${year}-${month}-${date}`
+const key = 'YTFlM2ExMWM1N2ZkMGRiMzM2NmMyYW'
+const proxy = 'https://gentle-reef-68268.herokuapp.com'
+const endpoint = 'https://api.willyweather.com.au/v2'
+const goldenBeach = '6871'
+const requestType = `tides,wind,sunrisesunset,uv,weather,rainfall,rainfallprobability`
+const period = 7
+const today = new Date()
+const year = today.getFullYear()
+const month = today.getMonth() + 1
+const date = today.getDate()
+const todayDate = `${year}-${month}-${date}`
 
-  let fullURL = `${proxy}/${endpoint}/${key}/locations/${goldenBeach}/weather.json?forecasts=${requestType}&days=${period}&startDate=${todayDate}`
-  //console.log(fullURL)
-  function getData() {
-    fetch(fullURL)
-      .then((response) => response.json())
-      .then((data) =>
-        localStorage.setItem('weather-data', JSON.stringify(data)),
-      )
-      .catch((error) => console.error(error))
-  }
+let fullURL = `${proxy}/${endpoint}/${key}/locations/${goldenBeach}/weather.json?forecasts=${requestType}&days=${period}&startDate=${todayDate}`
+//console.log(fullURL)
 
-  //getData()
+function getData(callback) {
+  const timestamp = new Date()
+  const formattedTimestamp = timestamp.toLocaleString()
+  localStorage.setItem('timestamp', formattedTimestamp)
 
-  //localStorage.setItem('weather-data', JSON.stringify(data))
-  return JSON.parse(localStorage.getItem('weather-data'))
+  fetch(fullURL)
+    .then((response) => response.json())
+    .then((data) => {
+      localStorage.setItem('weather-data', JSON.stringify(data))
+      callback(data)
+    })
+    .catch((error) => console.error(error))
 }
 
 function App() {
-  let forecastArray = getData()
-  //console.log(forecastArray)
-  const [state, setState] = React.useState({
-    data: forecastArray,
+  const [state, setState] = useState({
+    data: JSON.parse(localStorage.getItem('weather-data')) || backupData,
     marker: 0,
     days: 7,
   })
 
+  useEffect(() => {
+    console.log('Getting data')
+    getData((data) => {
+      setState({ ...state, data })
+    })
+  }, [])
+
   return (
     <div className="app">
       <div className="app-1 main-nav">
-        <div className="refresh-icon" onClick={getData}>
+        <div
+          className="refresh-icon"
+          onClick={() => getData((data) => setState({ ...state, data }))}
+        >
           <span className="material-symbols-outlined">cycle</span>
         </div>
       </div>

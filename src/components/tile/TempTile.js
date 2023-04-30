@@ -2,7 +2,7 @@ import './Tile.css'
 
 function TempTile(props) {
   return (
-    <div className="tile">
+    <div className={'tile ' + props.className}>
       <div className="tile-inner">
         <p>
           <span className="material-symbols-outlined tile-icon">

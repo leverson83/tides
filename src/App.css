@@ -9,6 +9,10 @@
 	--gutters: 15px;
 }
 
+body {
+  background-color: var(--black);
+}
+
 .app {
   display: grid;
   grid-template-columns: 75px auto;

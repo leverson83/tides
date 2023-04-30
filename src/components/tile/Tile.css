@@ -1,5 +1,5 @@
 .tile {
-  min-height: 150px;
+  min-height: 130px;
   text-align: center;
   background-color: var(--dark-grey);
   border-radius: 5px;
