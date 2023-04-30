@@ -3,7 +3,6 @@ import './App.css'
 import Dashboard from './components/dashboard/dashboard'
 import TopNav from './components/topNav/TopNav'
 import React from 'react'
-React.unstable_disableStrictMode = true
 
 function getData() {
   const key = 'YTFlM2ExMWM1N2ZkMGRiMzM2NmMyYW'
