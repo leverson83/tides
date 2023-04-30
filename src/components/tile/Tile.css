@@ -1,0 +1,17 @@
+.tile {
+  min-height: 130px;
+  text-align: center;
+  background-color: var(--dark-grey);
+  border-radius: 5px;
+}
+
+.tile-inner {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mid-blue)
+}
+
+.tile-icon {
+  font-size: 40px;
+}
