@@ -45,7 +45,7 @@ function App() {
   useEffect(() => {
     console.log('Getting data')
     getData((data) => {
-      setState({ ...state, data })
+      setState({ ...state, backupData })
     })
   }, [])
 
