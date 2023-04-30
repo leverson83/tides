@@ -2,7 +2,9 @@ import './App.css'
 import backupData from './data/weather-api.json'
 import Dashboard from './components/dashboard/dashboard'
 import TopNav from './components/topNav/TopNav'
+import SideNav from './components/sideNav/SideNav'
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 const key = 'YTFlM2ExMWM1N2ZkMGRiMzM2NmMyYW'
 const proxy = 'https://gentle-reef-68268.herokuapp.com'
@@ -48,23 +50,33 @@ function App() {
   }, [])
 
   return (
-    <div className="app">
-      <div className="app-1 main-nav">
-        <div
-          className="refresh-icon"
-          onClick={() => getData((data) => setState({ ...state, data }))}
-        >
-          <span className="material-symbols-outlined">cycle</span>
+    <BrowserRouter>
+      <div className="app">
+        <div className="app-1 main-nav">
+          <div
+            className="refresh-icon"
+            onClick={() => getData((data) => setState({ ...state, data }))}
+          >
+            <span className="material-symbols-outlined">cycle</span>
+          </div>
+        </div>
+        <div className="app-2 main-nav">
+          <TopNav state={state} setState={setState} />
+        </div>
+        <div className="app-3 main-nav">
+          <SideNav state={state} setState={setState} />
+        </div>
+        <div className="app-4 main-nav">
+          <Routes>
+            <Route
+              path="/"
+              element={<Dashboard state={state} setState={setState} />}
+            ></Route>
+            <Route path="/wind" element={<div>Test</div>}></Route>
+          </Routes>
         </div>
       </div>
-      <div className="app-2 main-nav">
-        <TopNav state={state} setState={setState} />
-      </div>
-      <div className="app-3 main-nav"> </div>
-      <div className="app-4 main-nav">
-        <Dashboard state={state} setState={setState} />
-      </div>
-    </div>
+    </BrowserRouter>
   )
 }
 
