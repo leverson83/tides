@@ -4,7 +4,6 @@ import SunTile from '../tile/SunTile'
 import TempTile from '../tile/TempTile'
 import RainTile from '../tile/RainTile'
 import BasicChart from '../chart/BasicChart'
-import RainChart from '../chart/RainChart'
 
 function Dashboard(props) {
   const { state, setState } = props
@@ -14,7 +13,6 @@ function Dashboard(props) {
   let temp = forecasts.weather?.days[state.marker].entries[0]
   let rain = forecasts.rainfall?.days[state.marker].entries[0]
   let wind = forecasts.wind?.days[state.marker].entries
-  //let rainChance = forecasts.rainfallprobability?.days[state.marker].entries
 
   return (
     <div className="dashboard">
