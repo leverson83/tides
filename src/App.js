@@ -19,7 +19,7 @@ const date = today.getDate()
 const todayDate = `${year}-${month}-${date}`
 
 let fullURL = `${proxy}/${endpoint}/${key}/locations/${goldenBeach}/weather.json?forecasts=${requestType}&days=${period}&startDate=${todayDate}`
-//console.log(fullURL)
+console.log(fullURL)
 
 function getData(callback) {
   const timestamp = new Date()
