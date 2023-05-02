@@ -1,5 +1,4 @@
 import './App.css'
-import backupData from './data/weather-api.json'
 import Dashboard from './components/dashboard/dashboard'
 import TopNav from './components/topNav/TopNav'
 import SideNav from './components/sideNav/SideNav'
@@ -19,40 +18,40 @@ const date = today.getDate()
 const todayDate = `${year}-${month}-${date}`
 
 let fullURL = `${proxy}/${endpoint}/${key}/locations/${goldenBeach}/weather.json?forecasts=${requestType}&days=${period}&startDate=${todayDate}`
-console.log(fullURL)
-
-function getData(callback) {
-  const timestamp = new Date()
-  const formattedTimestamp = timestamp.toLocaleString()
-  localStorage.setItem('timestamp', formattedTimestamp)
-
-  fetch(fullURL)
-    .then((response) => response.json())
-    .then((data) => {
-      localStorage.setItem('weather-data', JSON.stringify(data))
-      callback(data)
-    })
-    .catch((error) => console.error(error))
-}
+//console.log(fullURL)
 
 function App() {
   const [state, setState] = useState({
-    data: JSON.parse(localStorage.getItem('weather-data')) || backupData,
+    data: null,
     marker: 0,
     days: 7,
   })
 
   useEffect(() => {
     console.log('Getting data')
-    getData((data) => {
-      setState({ ...state, data })
-    })
+    fetch(fullURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setState({ ...state, data })
+      })
+      .catch((error) => console.error(error))
   }, [])
 
   const handleRefresh = () => {
-    getData((data) => {
-      setState({ ...state, data })
-    })
+    fetch(fullURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setState({ ...state, data })
+      })
+      .catch((error) => console.error(error))
+  }
+
+  if (!state.data) {
+    return (
+      <div>
+        <h1>Loading</h1>
+      </div>
+    )
   }
 
   return (
