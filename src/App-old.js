@@ -26,13 +26,6 @@ function getData(callback) {
   const formattedTimestamp = timestamp.toLocaleString()
   localStorage.setItem('timestamp', formattedTimestamp)
 
-  // check if data is available in localStorage
-  const localStorageData = JSON.parse(localStorage.getItem('weather-data'))
-  if (localStorageData) {
-    callback(localStorageData)
-  }
-
-  // make fetch request to get latest data
   fetch(fullURL)
     .then((response) => response.json())
     .then((data) => {
@@ -48,6 +41,13 @@ function App() {
     marker: 0,
     days: 7,
   })
+
+  useEffect(() => {
+    console.log('Getting data')
+    getData((data) => {
+      setState({ ...state, data })
+    })
+  }, [])
 
   return (
     <BrowserRouter>
@@ -79,3 +79,5 @@ function App() {
     </BrowserRouter>
   )
 }
+
+export default App
