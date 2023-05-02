@@ -20,7 +20,7 @@ function Dashboard(props) {
     <div className="dashboard">
       <SunTile className="tile-1" time={sun.riseDateTime} type="Sunrise" />
       <TempTile className="tile-2" min={temp.min} max={temp.max} />
-
+      <RainTile className="tile-3" prob={rain.probability} />
       <SunTile className="tile-4" time={sun.setDateTime} type="Sunset" />
 
       {tides.map((item, i) => (
@@ -31,9 +31,7 @@ function Dashboard(props) {
       <div className="tile tile-9">
         <BasicChart data={wind} />
       </div>
-      <div className="tile tile-10">
-        <RainChart data={rainChance} />
-      </div>
+      <div className="tile tile-10"></div>
     </div>
   )
 }
