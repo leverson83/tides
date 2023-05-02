@@ -20,4 +20,5 @@ EXPOSE 3000
 VOLUME /app/data
 
 # start app
-CMD ["npm", "start", "--", "--network", "host"]    
+#CMD ["npm", "start", "--", "--network", "host"]
+CMD ["npm", "start"]    
