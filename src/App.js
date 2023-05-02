@@ -26,13 +26,6 @@ function getData(callback) {
   const formattedTimestamp = timestamp.toLocaleString()
   localStorage.setItem('timestamp', formattedTimestamp)
 
-  // check if data is available in localStorage
-  const localStorageData = JSON.parse(localStorage.getItem('weather-data'))
-  if (localStorageData) {
-    callback(localStorageData)
-  }
-
-  // make fetch request to get latest data
   fetch(fullURL)
     .then((response) => response.json())
     .then((data) => {
@@ -49,14 +42,24 @@ function App() {
     days: 7,
   })
 
+  useEffect(() => {
+    console.log('Getting data')
+    getData((data) => {
+      setState({ ...state, data })
+    })
+  }, [])
+
+  const handleRefresh = () => {
+    getData((data) => {
+      setState({ ...state, data })
+    })
+  }
+
   return (
     <BrowserRouter>
       <div className="app">
         <div className="app-1 main-nav">
-          <div
-            className="refresh-icon"
-            onClick={() => getData((data) => setState({ ...state, data }))}
-          >
+          <div className="refresh-icon" onClick={handleRefresh}>
             <span className="material-symbols-outlined">cycle</span>
           </div>
         </div>
@@ -79,3 +82,5 @@ function App() {
     </BrowserRouter>
   )
 }
+
+export default App
