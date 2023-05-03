@@ -1,5 +1,5 @@
-import ButtonNav from '../buttonNav/ButtonNav'
-import './TopNav.css'
+import ButtonNav from './ButtonNav'
+import './navigation.css'
 
 function TopNav(props) {
   const { state, setState } = props

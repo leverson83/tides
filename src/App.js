@@ -1,7 +1,8 @@
 import './App.css'
 import Dashboard from './components/dashboard/dashboard'
-import TopNav from './components/topNav/TopNav'
-import SideNav from './components/sideNav/SideNav'
+import TopNav from './components/navigation/TopNav'
+import SideNav from './components/navigation/SideNav'
+import Loader from './components/loader/Loader'
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -48,8 +49,8 @@ function App() {
 
   if (!state.data) {
     return (
-      <div>
-        <h1>Loading</h1>
+      <div className="loadMain">
+        <Loader />
       </div>
     )
   }

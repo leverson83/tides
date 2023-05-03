@@ -1,14 +1,20 @@
-import './BasicChart.css'
+import './Charts.css'
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
-const BasicChart = (props) => {
-  const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
-  const timesArray = props.data
-    .slice(5, 21)
-    .map((obj) => obj.dateTime.slice(10, 16))
+const TideChart = (props) => {
+  const tidesArray = props.data.map((obj) => obj.height)
+  const timesArray = props.data.map((obj) => {
+    const dateTime = new Date(obj.dateTime)
+    const options = {
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit',
+    }
+    return dateTime.toLocaleTimeString('en-AU', options)
+  })
 
   const options = {
     scales: {
@@ -25,11 +31,11 @@ const BasicChart = (props) => {
   const data = {
     datasets: [
       {
-        label: 'Wind speed',
-        data: speedsArray,
+        label: 'Tide height',
+        data: tidesArray,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1,
+        tension: 0.4,
       },
     ],
   }
@@ -45,4 +51,4 @@ const BasicChart = (props) => {
   )
 }
 
-export default BasicChart
+export default TideChart

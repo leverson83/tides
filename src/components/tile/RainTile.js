@@ -1,4 +1,4 @@
-import './Tile.css'
+import './tiles.css'
 
 function RainTile(props) {
   return (

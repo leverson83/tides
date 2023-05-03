@@ -1,4 +1,4 @@
-import './SideNav.css'
+import './navigation.css'
 import SideNavItem from './SideNavItem'
 
 function SideNav(props) {

@@ -1,4 +1,4 @@
-import './Tile.css'
+import './tiles.css'
 
 function SunTile(props) {
   let dateTime = new Date(props.time)

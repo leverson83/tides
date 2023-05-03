@@ -1,4 +1,4 @@
-import './ButtonNav.css'
+import './navigation.css'
 import React from 'react'
 
 function ButtonNav(props) {

@@ -1,12 +1,14 @@
-import './BasicChart.css'
+import './Charts.css'
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
-const RainChart = (props) => {
-  const rainsArray = props.data.map((obj) => obj.probability)
-  const timesArray = props.data.map((obj) => obj.dateTime.slice(10, 16))
+const WindChart = (props) => {
+  const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
+  const timesArray = props.data
+    .slice(5, 21)
+    .map((obj) => obj.dateTime.slice(10, 16))
 
   const options = {
     scales: {
@@ -15,7 +17,7 @@ const RainChart = (props) => {
         labels: timesArray,
       },
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
       },
     },
   }
@@ -23,11 +25,11 @@ const RainChart = (props) => {
   const data = {
     datasets: [
       {
-        label: 'Rain chance',
-        data: rainsArray,
+        label: 'Wind speed',
+        data: speedsArray,
         fill: false,
-        borderColor: 'rgb(0, 184, 170)',
-        tension: 0.2,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1,
       },
     ],
   }
@@ -43,4 +45,4 @@ const RainChart = (props) => {
   )
 }
 
-export default RainChart
+export default WindChart
