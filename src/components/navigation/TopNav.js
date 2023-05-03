@@ -6,7 +6,11 @@ function TopNav(props) {
   let date = new Date(
     state.data.forecasts.sunrisesunset.days[state.marker].dateTime,
   )
-  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  const options = {
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long',
+  }
   const dateString = date.toLocaleDateString([], options)
 
   return (
