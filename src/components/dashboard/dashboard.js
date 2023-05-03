@@ -4,15 +4,17 @@ import TempTile from '../tile/TempTile'
 import RainTile from '../tile/RainTile'
 import WindChart from '../chart/WindChart'
 import TideChart from '../chart/TideChart'
+import UVChart from '../chart/UVChart'
 
 function Dashboard(props) {
   const { state, setState } = props
   let forecasts = state.data.forecasts
-  let tides = forecasts.tides?.days[state.marker].entries
-  let sun = forecasts.sunrisesunset?.days[state.marker].entries[0]
-  let temp = forecasts.weather?.days[state.marker].entries[0]
-  let rain = forecasts.rainfall?.days[state.marker].entries[0]
-  let wind = forecasts.wind?.days[state.marker].entries
+  let tides = forecasts.tides?.days[state.marker]?.entries
+  let sun = forecasts.sunrisesunset?.days[state.marker]?.entries[0]
+  let temp = forecasts.weather?.days[state.marker]?.entries[0]
+  let rain = forecasts.rainfall?.days[state.marker]?.entries[0]
+  let wind = forecasts.wind?.days[state.marker]?.entries
+  let UV = forecasts.uv.days[state.marker]?.entries
 
   return (
     <div className="dashboard">
@@ -29,7 +31,7 @@ function Dashboard(props) {
       </div>
 
       <div className="tile tile-7">
-        <WindChart data={wind} />
+        {UV.length > 0 ? <UVChart data={UV} /> : null}
       </div>
       <div className="tile tile-8">
         <TideChart data={tides} />

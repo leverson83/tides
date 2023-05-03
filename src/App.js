@@ -29,7 +29,6 @@ function App() {
   })
 
   useEffect(() => {
-    console.log('Getting data')
     fetch(fullURL)
       .then((response) => response.json())
       .then((data) => {
@@ -54,6 +53,8 @@ function App() {
       </div>
     )
   }
+
+  console.log(state.data.forecasts)
 
   return (
     <BrowserRouter>
