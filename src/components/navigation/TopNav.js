@@ -12,17 +12,17 @@ function TopNav(props) {
     weekday: 'long',
   }
   const dateString = date.toLocaleDateString([], options)
-
+  console.log(state.showNav)
   return (
     <div className="topNav">
-      <div className="topNavLeft">
+      <div className={'topNavLeft' + (state.showNav ? '' : ' hidden')}>
         <ButtonNav state={state} setState={setState} type="back" />
       </div>
       <div className="topNavMid">
-        <h4>Golden Beach Forecast</h4>
-        <p>{dateString}</p>
+        <h4>Golden Beach {state.pageTitle}</h4>
+        <p className={state.showDate ? '' : 'hidden'}>{dateString}</p>
       </div>
-      <div className="topNavRight">
+      <div className={'topNavRight' + (state.showNav ? '' : ' hidden')}>
         <ButtonNav state={state} setState={setState} type="forward" />
       </div>
     </div>

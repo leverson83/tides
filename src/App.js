@@ -3,6 +3,7 @@ import Dashboard from './components/dashboard/dashboard'
 import TopNav from './components/navigation/TopNav'
 import SideNav from './components/navigation/SideNav'
 import Loader from './components/loader/Loader'
+import WindyMap from './components/map/WindyMap'
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -26,6 +27,9 @@ function App() {
     data: null,
     marker: 0,
     days: 7,
+    pageTitle: 'Forecast',
+    showDate: true,
+    showNav: true,
   })
 
   useEffect(() => {
@@ -76,7 +80,10 @@ function App() {
               path="/"
               element={<Dashboard state={state} setState={setState} />}
             ></Route>
-            <Route path="/wind" element={<div>Test</div>}></Route>
+            <Route
+              path="/wind"
+              element={<WindyMap state={state} setState={setState} />}
+            ></Route>
           </Routes>
         </div>
       </div>

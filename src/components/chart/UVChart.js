@@ -5,18 +5,23 @@ import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
 const UVChart = (props) => {
-  const UVArray = props.data.map((obj) => obj.index)
-  const timesArray = props.data.map((obj) => {
-    const dateTime = new Date(obj.dateTime)
-    const options = {
-      hour12: true,
-      hour: 'numeric',
-      minute: '2-digit',
-    }
-    const timeString = dateTime.toLocaleTimeString('en-AU', options)
+  let UVArray = []
+  let timesArray = []
 
-    return timeString.replace('am', '').replace('pm', '')
-  })
+  if (props.data && props.data.length > 0) {
+    UVArray = props.data.map((obj) => obj.index)
+    timesArray = props.data.map((obj) => {
+      const dateTime = new Date(obj.dateTime)
+      const options = {
+        hour12: true,
+        hour: 'numeric',
+        minute: '2-digit',
+      }
+      const timeString = dateTime.toLocaleTimeString('en-AU', options)
+
+      return timeString.replace('am', '').replace('pm', '')
+    })
+  }
 
   const options = {
     scales: {
@@ -37,6 +42,10 @@ const UVChart = (props) => {
         data: UVArray,
         fill: true,
         borderWidth: 2,
+        pointBackgroundColor: (context) =>
+          context.dataset.data[context.dataIndex] > 2
+            ? 'red'
+            : 'rgb(75, 192, 192)',
         borderColor: (context) =>
           context.dataset.data[context.dataIndex] > 2
             ? 'red'

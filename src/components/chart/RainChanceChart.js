@@ -4,11 +4,24 @@ import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
-const WindChart = (props) => {
-  const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
-  const timesArray = props.data
-    .slice(5, 21)
-    .map((obj) => obj.dateTime.slice(10, 16))
+const RainChanceChart = (props) => {
+  let UVArray = []
+  let timesArray = []
+
+  if (props.data && props.data.length > 0) {
+    UVArray = props.data.map((obj) => obj.index)
+    timesArray = props.data.map((obj) => {
+      const dateTime = new Date(obj.dateTime)
+      const options = {
+        hour12: true,
+        hour: 'numeric',
+        minute: '2-digit',
+      }
+      const timeString = dateTime.toLocaleTimeString('en-AU', options)
+
+      return timeString.replace('am', '').replace('pm', '')
+    })
+  }
 
   const options = {
     scales: {
@@ -17,7 +30,7 @@ const WindChart = (props) => {
         labels: timesArray,
       },
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
       },
     },
   }
@@ -25,21 +38,19 @@ const WindChart = (props) => {
   const data = {
     datasets: [
       {
-        label: 'Wind speed',
-        data: speedsArray,
+        label: 'Rain Chance',
+        data: UVArray,
         fill: true,
         borderWidth: 2,
         pointBackgroundColor: (context) =>
-          context.dataset.data[context.dataIndex] > 15
+          context.dataset.data[context.dataIndex] > 2
             ? 'red'
             : 'rgb(75, 192, 192)',
         borderColor: (context) =>
-          context.dataset.data[context.dataIndex] > 15
+          context.dataset.data[context.dataIndex] > 2
             ? 'red'
             : 'rgb(75, 192, 192)',
-        tension: 0.1,
-        borderJoinStyle: (context) =>
-          context.dataset.data[context.dataIndex] > 15 ? 'round' : 'miter',
+        tension: 0.4,
       },
     ],
   }
@@ -55,4 +66,4 @@ const WindChart = (props) => {
   )
 }
 
-export default WindChart
+export default RainChanceChart

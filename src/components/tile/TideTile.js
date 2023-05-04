@@ -1,6 +1,6 @@
-import './Tile.css'
+import './tiles.css'
 
-function Tile(props) {
+function TideTile(props) {
   let dateTime = new Date(props.data.dateTime)
 
   let time = dateTime.toLocaleTimeString([], {
@@ -28,4 +28,4 @@ function Tile(props) {
   )
 }
 
-export default Tile
+export default TideTile
