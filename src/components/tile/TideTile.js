@@ -1,13 +1,10 @@
+import moment from 'moment'
 import './tiles.css'
 
 function TideTile(props) {
-  let dateTime = new Date(props.data.dateTime)
+  let dateTime = moment(props.data.dateTime)
 
-  let time = dateTime.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  })
+  let time = dateTime.format('LT')
 
   return (
     <div className={props.name}>
