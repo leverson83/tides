@@ -32,10 +32,10 @@ function Dashboard(props) {
       ))}
 
       <div className="tile tile-7">
-        <UVChart data={UV} />
+        <WindChart data={wind} />
       </div>
       <div className="tile tile-8">
-        <WindChart data={wind} />
+        <UVChart data={UV} />
       </div>
     </div>
   )

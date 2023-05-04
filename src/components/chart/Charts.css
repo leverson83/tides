@@ -6,4 +6,12 @@
   align-items: center;
   padding-top: var(--gutters);
   padding-bottom: var(--gutters);
+  padding-top: 15px;
+  position: relative;
+}
+
+.chartTitle {
+  position: absolute;
+  top: 0;
+  color: #666666;
 }

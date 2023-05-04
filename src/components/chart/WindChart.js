@@ -7,6 +7,7 @@ import moment from 'moment'
 
 const WindChart = (props) => {
   const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
+  const lineArray = props.data.slice(5, 24).map(() => 15)
   const timesArray = props.data
     .slice(5, 21)
     .map((obj) => moment(obj.dateTime).format('h:mm'))
@@ -19,6 +20,11 @@ const WindChart = (props) => {
       },
       y: {
         beginAtZero: true,
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
       },
     },
   }
@@ -39,8 +45,16 @@ const WindChart = (props) => {
             ? 'red'
             : 'rgb(75, 192, 192)',
         tension: 0.1,
-        borderJoinStyle: (context) =>
-          context.dataset.data[context.dataIndex] > 15 ? 'round' : 'miter',
+      },
+      {
+        label: '15km',
+        data: lineArray,
+        fill: false,
+        borderWidth: 1,
+        borderDash: [5, 5],
+        borderColor: 'rgb(102, 102, 102)',
+        pointRadius: 0,
+        tension: 0.1,
       },
     ],
   }
@@ -51,6 +65,7 @@ const WindChart = (props) => {
 
   return (
     <div className="chartWrapper">
+      <p className="chartTitle">Wind Speed</p>
       <Line data={data} options={options} />
     </div>
   )
