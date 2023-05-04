@@ -3,12 +3,13 @@ import React from 'react'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
+import moment from 'moment'
 
 const WindChart = (props) => {
   const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
   const timesArray = props.data
     .slice(5, 21)
-    .map((obj) => obj.dateTime.slice(10, 16))
+    .map((obj) => moment(obj.dateTime).format('h:mm'))
 
   const options = {
     scales: {

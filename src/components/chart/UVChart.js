@@ -3,6 +3,7 @@ import React from 'react'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
+import moment from 'moment'
 
 const UVChart = (props) => {
   let UVArray = []
@@ -11,15 +12,8 @@ const UVChart = (props) => {
   if (props.data && props.data.length > 0) {
     UVArray = props.data.map((obj) => obj.index)
     timesArray = props.data.map((obj) => {
-      const dateTime = new Date(obj.dateTime)
-      const options = {
-        hour12: true,
-        hour: 'numeric',
-        minute: '2-digit',
-      }
-      const timeString = dateTime.toLocaleTimeString('en-AU', options)
-
-      return timeString.replace('am', '').replace('pm', '')
+      const dateTime = moment(obj.dateTime)
+      return dateTime.format('h:mm')
     })
   }
 
