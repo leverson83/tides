@@ -1,13 +1,10 @@
 import './tiles.css'
+import moment from 'moment'
 
 function SunTile(props) {
-  let dateTime = new Date(props.time)
+  let dateTime = moment(props.time)
 
-  let time = dateTime.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  })
+  let time = dateTime.format('LT')
 
   return (
     <div className={'tile ' + props.className}>

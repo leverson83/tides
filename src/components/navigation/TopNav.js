@@ -1,17 +1,13 @@
 import ButtonNav from './ButtonNav'
 import './navigation.css'
+import moment from 'moment'
 
 function TopNav(props) {
   const { state, setState } = props
-  let date = new Date(
+  const date = moment(
     state.data.forecasts.sunrisesunset.days[state.marker].dateTime,
   )
-  const options = {
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  }
-  const dateString = date.toLocaleDateString([], options)
+  const dateString = date.format('dddd, MMMM Do')
   console.log(state.showNav)
   return (
     <div className="topNav">
