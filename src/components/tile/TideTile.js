@@ -20,6 +20,7 @@ function TideTile(props) {
         <p>
           {props.data.type.charAt(0).toUpperCase() + props.data.type.slice(1)}
         </p>
+        <small>{props.data.height}m</small>
       </div>
     </div>
   )

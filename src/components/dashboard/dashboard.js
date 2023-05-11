@@ -31,10 +31,10 @@ function Dashboard(props) {
         <TideTile name={'tile tide-' + (i + 5)} key={'tides' + i} data={item} />
       ))}
 
-      <div className="tile tile-7">
+      <div className="tile tile-9">
         <WindChart data={wind} />
       </div>
-      <div className="tile tile-8">
+      <div className="tile tile-10">
         <UVChart data={UV} />
       </div>
     </div>
