@@ -5,6 +5,10 @@
   border-radius: 5px;
 }
 
+.content.embedded .tile {
+  min-height: 150px;
+}
+
 .tile-inner {
   position: relative;
   top: 50%;

@@ -8,18 +8,12 @@ function TopNav(props) {
     state.data.forecasts.sunrisesunset.days[state.marker].dateTime,
   )
   const dateString = date.format('dddd, MMMM Do')
-  console.log(state.showNav)
+
   return (
     <div className="topNav">
-      <div className={'topNavLeft' + (state.showNav ? '' : ' hidden')}>
-        <ButtonNav state={state} setState={setState} type="back" />
-      </div>
       <div className="topNavMid">
-        <h4>Golden Beach {state.pageTitle}</h4>
+        <h4>Golden Beach</h4>
         <p className={state.showDate ? '' : 'hidden'}>{dateString}</p>
-      </div>
-      <div className={'topNavRight' + (state.showNav ? '' : ' hidden')}>
-        <ButtonNav state={state} setState={setState} type="forward" />
       </div>
     </div>
   )

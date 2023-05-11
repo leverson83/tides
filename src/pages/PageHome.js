@@ -7,16 +7,11 @@ function PageHome(props) {
   const { state, setState, refresh, embedded } = props
   return (
     <div className={'content ' + (embedded ? 'embedded' : '')}>
-      <div className="app-1 main-nav">
-        <div className="refresh-icon" onClick={refresh}>
-          <span className="material-symbols-outlined">cycle</span>
-        </div>
-      </div>
       <div className="app-2 main-nav">
         <TopNav state={state} setState={setState} />
       </div>
       <div className="app-3 main-nav">
-        <SideNav state={state} setState={setState} />
+        <div>.</div>
       </div>
       <div className="app-4 main-nav">
         <Dashboard state={state} setState={setState} />

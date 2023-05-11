@@ -9,13 +9,19 @@
 }
 
 .content.embedded {
-  display: block;
+  display: grid;
+  grid-template-columns: 25px auto 25px;
+  grid-template-rows: auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  height: 100vh;
+  background-color: var(--black);
 }
 
 .content.embedded .app-1,
 .content.embedded .app-2,
 .content.embedded .app-3 {
-  display: none;
+ 
 }
 
 .app-1 { grid-area: 1 / 1 / 2 / 2; }
