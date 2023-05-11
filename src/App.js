@@ -69,7 +69,7 @@ function App() {
                 state={state}
                 setState={setState}
                 refresh={handleRefresh}
-                embedded={false}
+                embedded={true}
               />
             }
           ></Route>
