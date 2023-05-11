@@ -17,7 +17,7 @@
   .tile-9 { grid-area: 5 / 1 / 6 / 2;}
   .tile-10 { grid-area: 5 / 2 / 6 / 3;}
   
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 992px) {
     .dashboard {
       display: grid;
       grid-template-columns: repeat(4, 1fr);

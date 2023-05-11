@@ -1,9 +1,7 @@
 import './App.css'
-import Dashboard from './components/dashboard/dashboard'
-import TopNav from './components/navigation/TopNav'
-import SideNav from './components/navigation/SideNav'
 import Loader from './components/loader/Loader'
-import WindyMap from './components/map/WindyMap'
+import PageHome from './pages/PageHome'
+import PageMap from './pages/PageMap'
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -63,29 +61,37 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <div className="app-1 main-nav">
-          <div className="refresh-icon" onClick={handleRefresh}>
-            <span className="material-symbols-outlined">cycle</span>
-          </div>
-        </div>
-        <div className="app-2 main-nav">
-          <TopNav state={state} setState={setState} />
-        </div>
-        <div className="app-3 main-nav">
-          <SideNav state={state} setState={setState} />
-        </div>
-        <div className="app-4 main-nav">
-          <Routes>
-            <Route
-              path="/"
-              element={<Dashboard state={state} setState={setState} />}
-            ></Route>
-            <Route
-              path="/wind"
-              element={<WindyMap state={state} setState={setState} />}
-            ></Route>
-          </Routes>
-        </div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PageHome
+                state={state}
+                setState={setState}
+                refresh={handleRefresh}
+                embedded={false}
+              />
+            }
+          ></Route>
+          <Route
+            path="/wind"
+            element={
+              <PageMap state={state} setState={setState} embedded={false} />
+            }
+          ></Route>
+          <Route
+            path="/embedded/home"
+            element={
+              <PageHome state={state} setState={setState} embedded={true} />
+            }
+          ></Route>
+          <Route
+            path="/embedded/wind"
+            element={
+              <PageMap state={state} setState={setState} embedded={true} />
+            }
+          ></Route>
+        </Routes>
       </div>
     </BrowserRouter>
   )

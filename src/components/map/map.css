@@ -8,3 +8,6 @@
   margin: var(--gutters)
 }
 
+.content.embedded .mapWrapper {
+  height: calc(100vh - 30px);
+}

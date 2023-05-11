@@ -1,4 +1,5 @@
 import './Dashboard.css'
+import '../navigation/nav-layout.css'
 import SunTile from '../tile/SunTile'
 import TideTile from '../tile/TideTile'
 import TempTile from '../tile/TempTile'
