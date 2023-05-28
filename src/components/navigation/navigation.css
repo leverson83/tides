@@ -56,17 +56,18 @@
 
 /*TopNav */
 .topNav {
-  display: block;
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 15px;
   grid-row-gap: 0px;
   height: 100%;
-  padding-left: 15px;
   padding-right: 15px;
   padding-top: 15px;
 }
-.topNavMid { grid-area: 1 / 2 / 2 / 4; }
+
+.topNavMid { grid-area: 1 / 1 / 1 / 3; }
+.topNavRight { grid-area: 1 / 3 / 1 / 5; }
 
 .topNavMid {
   text-align: left;
@@ -80,6 +81,38 @@
   margin-bottom: 0;
   display: inline-block;
   padding: 5px;
+}
+
+.topNavRight {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skipToDay {
+  flex: 1;
+  color: #fff;
+  border: 1px solid var(--mid-blue);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.skipToDay:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.skipToDay:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.skipToDay:hover {
+  background-color: var(--mid-blue);
+}
+
+.skipToDay.active {
+  background-color: var(--mid-blue);
 }
 
 

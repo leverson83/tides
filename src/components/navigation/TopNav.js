@@ -1,6 +1,7 @@
 import ButtonNav from './ButtonNav'
 import './navigation.css'
 import moment from 'moment'
+import SkipToDay from './SkipToDay'
 
 function TopNav(props) {
   const { state, setState } = props
@@ -14,6 +15,16 @@ function TopNav(props) {
       <div className="topNavMid">
         <h4>Golden Beach</h4>
         <p className={state.showDate ? '' : 'hidden'}>{dateString}</p>
+      </div>
+      <div className="topNavRight">
+        {state.data.forecasts.sunrisesunset.days.map((item, i) => (
+          <SkipToDay
+            key={'days' + i}
+            state={state}
+            setState={setState}
+            index={i}
+          />
+        ))}
       </div>
     </div>
   )

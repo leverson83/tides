@@ -1,6 +1,6 @@
 .content {
   display: grid;
-  grid-template-columns: 75px auto;
+  grid-template-columns: auto;
   grid-template-rows: 75px auto;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -24,10 +24,8 @@
  
 }
 
-.app-1 { grid-area: 1 / 1 / 2 / 2; }
-.app-2 { grid-area: 1 / 2 / 2 / 3; }
-.app-3 { grid-area: 2 / 1 / 3 / 2; }
-.app-4 { grid-area: 2 / 2 / 3 / 3; }
+.app-1 { grid-area: 1 / 1 / 1 / 3; }
+.app-2 { grid-area: 2 / 1 / 2 / 3; }
 
 .app-1 {
   color: #fff;
