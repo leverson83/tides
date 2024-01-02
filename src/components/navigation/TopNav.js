@@ -1,10 +1,16 @@
-import ButtonNav from './ButtonNav'
-import './navigation.css'
+import React, { useState } from 'react'
 import moment from 'moment'
 import SkipToDay from './SkipToDay'
+import SideMenu from './SideMenu'
 
 function TopNav(props) {
   const { state, setState } = props
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen)
+  }
+
   const date = moment(
     state.data.forecasts.sunrisesunset.days[state.marker].dateTime,
   )
@@ -25,7 +31,13 @@ function TopNav(props) {
             index={i}
           />
         ))}
+        <div className="skipToDay">
+          <span className="material-symbols-outlined" onClick={toggleMenu}>
+            menu
+          </span>
+        </div>
       </div>
+      <SideMenu isOpen={menuOpen} toggleMenu={toggleMenu} />
     </div>
   )
 }

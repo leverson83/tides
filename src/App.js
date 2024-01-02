@@ -2,6 +2,7 @@ import './App.css'
 import Loader from './components/loader/Loader'
 import PageHome from './pages/PageHome'
 import PageMap from './pages/PageMap'
+import PageHourly from './pages/PageHourly'
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -56,7 +57,7 @@ function App() {
     )
   }
 
-  console.log(state.data.forecasts)
+  //console.log(state.data.forecasts)
 
   return (
     <BrowserRouter>
@@ -89,6 +90,12 @@ function App() {
             path="/embedded/wind"
             element={
               <PageMap state={state} setState={setState} embedded={true} />
+            }
+          ></Route>
+          <Route
+            path="/hourly"
+            element={
+              <PageHourly state={state} setState={setState} embedded={false} />
             }
           ></Route>
         </Routes>

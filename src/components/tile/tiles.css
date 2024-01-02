@@ -19,3 +19,79 @@
 .tile-icon {
   font-size: 40px;
 }
+
+.hourlyWrapper {
+  color: #fff;
+  height: 280px;
+  position: relative;
+}
+
+.directionMarker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/public/images/GoldenBeach2.png');
+  text-align: center;
+  height: 280px;
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  border: 4px solid var(--black);
+}
+
+.directionMarker span {
+  color: var(--mid-blue);
+  line-height: 280px;
+  font-size: 28px;
+  text-shadow:
+    -1px -1px 0 #000, 
+    1px -1px 0 #000, 
+    -1px 1px 0 #000, 
+    1px 1px 0 #000;
+}
+
+.container-fluid.hourly {
+  margin-top: 15px;
+  max-width: calc(100% - 30px)
+}
+
+.windSpeed, .rainProb {
+  position: absolute;
+  color: var(--mid-blue);
+  z-index: 1;
+  top: 5px;
+  left: 5px;
+  line-height: 1;
+  background-color: var(--black);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.rainProb {
+  left: 5px;
+  top: 60px;
+}
+
+.windSpeed .speedo, .rainProb .raino  {
+  line-height: 1;
+  font-size: 24px;
+  color: green;
+}
+
+.windSpeed .speedValue, .rainProb .rainProbValue {
+  font-size: 12px;
+}
+
+.hourlyTime {
+  position: absolute;
+  top: 5px;
+  z-index: 1;
+  color: var(--mid-blue);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--black);
+  padding: 5px;
+  border-radius: 5px;;
+}

@@ -39,7 +39,7 @@
 }
 
 .sideNavItem {
-  background-color: var(--teal);
+  background-color: var(--mid-blue);
   margin-bottom: var(--gutters);
   height: 60px;
   border-radius: 5px;
