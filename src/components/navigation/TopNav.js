@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import SkipToDay from './SkipToDay'
 import SideMenu from './SideMenu'
@@ -6,6 +6,10 @@ import SideMenu from './SideMenu'
 function TopNav(props) {
   const { state, setState } = props
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    console.log('State:', state)
+  }, [])
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
