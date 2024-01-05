@@ -14,7 +14,12 @@ function PageHourly(props) {
         <TopNav state={state} setState={setState} />
       </div>
       <div className="app-2 main-nav">
-        <Hourly state={state} setState={setState} forecasts={forecasts} />
+        <Hourly
+          state={state}
+          setState={setState}
+          forecasts={forecasts}
+          solunarArray={props.solunarArray}
+        />
       </div>
     </div>
   )

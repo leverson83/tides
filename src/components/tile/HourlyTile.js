@@ -75,6 +75,35 @@ function HourlyTile(props) {
             {props.rain.probability}%
           </div>
         </div>
+
+        <div className="hourlyRating">
+          <span
+            className="material-symbols-outlined rato"
+            style={{
+              color:
+                props.rating > 40
+                  ? 'green'
+                  : props.rating > 20
+                  ? 'orange'
+                  : 'red',
+            }}
+          >
+            phishing
+          </span>
+          <div
+            className="hourlyRatingValue"
+            style={{
+              color:
+                props.rating > 40
+                  ? 'green'
+                  : props.rating > 20
+                  ? 'orange'
+                  : 'red',
+            }}
+          >
+            {props.rating}
+          </div>
+        </div>
       </div>
     </div>
   )

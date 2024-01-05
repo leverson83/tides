@@ -1,9 +1,6 @@
 import './Dashboard.css'
 import '../navigation/nav-layout.css'
 import HourlyTile from '../tile/HourlyTile'
-import DirectionTile from '../tile/DirectionTile'
-import WindChart from '../chart/WindChart'
-import TideChart from '../chart/TideChart'
 import React, { useEffect } from 'react'
 
 function Hourly(props) {
@@ -12,6 +9,7 @@ function Hourly(props) {
   let rainProb =
     forecasts.rainfallprobability?.days[state.marker]?.entries || {}
   let wind = forecasts.wind?.days[state.marker]?.entries || []
+  let hourlyRating = props.solunarArray[state.marker].hourlyRating
 
   const rainProbPadded = []
   for (let i = 0; i < rainProb.length; i++) {
@@ -33,6 +31,7 @@ function Hourly(props) {
                   time={item.dateTime}
                   rain={rainProbPadded[index]}
                   index={index}
+                  rating={hourlyRating[index]}
                 />
               )
             } else {

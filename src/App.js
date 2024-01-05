@@ -19,7 +19,6 @@ const date = today.getDate()
 const todayDate = `${year}-${month}-${date}`
 
 let fullURL = `${proxy}/${endpoint}/${key}/locations/${goldenBeach}/weather.json?forecasts=${requestType}&days=${period}&startDate=${todayDate}`
-//console.log(fullURL)
 
 function App() {
   const [state, setState] = useState({
@@ -29,35 +28,90 @@ function App() {
     pageTitle: 'Forecast',
     showDate: true,
     showNav: true,
+    ratingGood: 20,
+    ratingMedium: 10,
   })
 
+  const [weatherData, setWeatherData] = useState(null)
+  const [solunarArray, setSolunarArray] = useState([])
+
   useEffect(() => {
-    fetch(fullURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setState({ ...state, data })
-      })
-      .catch((error) => console.error(error))
+    fetchWeatherData()
+    fetchSolunarData()
   }, [])
 
-  const handleRefresh = () => {
+  const fetchSolunarData = () => {
+    const coordinates = []
+
+    for (let i = 0; i < 7; i++) {
+      const currentDate = new Date(today)
+      currentDate.setDate(today.getDate() + i)
+      const dateString = currentDate
+        .toISOString()
+        .split('T')[0]
+        .replace(/-/g, '')
+
+      coordinates.push({
+        lat: -26.8114659,
+        lon: 153.1288131,
+        date: dateString,
+        hour: '10',
+      })
+    }
+
+    const requests = coordinates.map((coord) => {
+      const { lat, lon, date, hour } = coord
+      const url = `https://api.solunar.org/solunar/${lat},${lon},${date},${hour}`
+
+      return fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok')
+          }
+          return response.json()
+        })
+        .then((data) => {
+          // Merge solunarData with date
+          const solunarData = { ...data, date }
+          setSolunarArray((prevArray) => [...prevArray, solunarData])
+        })
+        .catch((error) => {
+          console.error(
+            `There was a problem with the fetch operation for date ${date}:`,
+            error,
+          )
+        })
+    })
+
+    Promise.all(requests)
+      .then(() => {})
+      .catch((error) => {
+        console.error('One or more Solunar requests failed:', error)
+      })
+  }
+
+  const fetchWeatherData = () => {
     fetch(fullURL)
       .then((response) => response.json())
       .then((data) => {
+        setWeatherData(data)
         setState({ ...state, data })
       })
       .catch((error) => console.error(error))
   }
 
-  if (!state.data) {
+  const handleRefresh = () => {
+    fetchWeatherData()
+    fetchSolunarData()
+  }
+
+  if (!weatherData || solunarArray.length < 7) {
     return (
       <div className="loadMain">
         <Loader />
       </div>
     )
   }
-
-  //console.log(state.data.forecasts)
 
   return (
     <BrowserRouter>
@@ -95,7 +149,12 @@ function App() {
           <Route
             path="/hourly"
             element={
-              <PageHourly state={state} setState={setState} embedded={false} />
+              <PageHourly
+                state={state}
+                setState={setState}
+                embedded={false}
+                solunarArray={solunarArray}
+              />
             }
           ></Route>
         </Routes>
