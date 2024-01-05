@@ -9,7 +9,12 @@ function Hourly(props) {
   let rainProb =
     forecasts.rainfallprobability?.days[state.marker]?.entries || {}
   let wind = forecasts.wind?.days[state.marker]?.entries || []
-  let hourlyRating = props.solunarArray[state.marker].hourlyRating
+  let hourlyRating = state.solunarArray[state.marker].hourlyRating
+
+  useEffect(() => {
+    setState({ ...state, pageTitle: 'Hourly', showNav: true, showDate: true })
+    document.title = `Golden Tides | Hourly`
+  }, [])
 
   const rainProbPadded = []
   for (let i = 0; i < rainProb.length; i++) {

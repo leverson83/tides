@@ -28,19 +28,16 @@ function App() {
     pageTitle: 'Forecast',
     showDate: true,
     showNav: true,
-    ratingGood: 20,
-    ratingMedium: 10,
+    solunarArray: [],
+    isLoading: true,
   })
-
-  const [weatherData, setWeatherData] = useState(null)
-  const [solunarArray, setSolunarArray] = useState([])
 
   useEffect(() => {
     fetchWeatherData()
     fetchSolunarData()
   }, [])
 
-  const fetchSolunarData = () => {
+  const fetchSolunarData = async () => {
     const coordinates = []
 
     for (let i = 0; i < 7; i++) {
@@ -55,57 +52,74 @@ function App() {
         lat: -26.8114659,
         lon: 153.1288131,
         date: dateString,
-        hour: '10',
+        hour: '+10',
       })
     }
 
-    const requests = coordinates.map((coord) => {
-      const { lat, lon, date, hour } = coord
-      const url = `https://api.solunar.org/solunar/${lat},${lon},${date},${hour}`
+    try {
+      const solunarRequests = coordinates.map((coord) => {
+        const { lat, lon, date, hour } = coord
+        const url = `https://api.solunar.org/solunar/${lat},${lon},${date},${hour}`
 
-      return fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok')
-          }
-          return response.json()
-        })
-        .then((data) => {
-          // Merge solunarData with date
-          const solunarData = { ...data, date }
-          setSolunarArray((prevArray) => [...prevArray, solunarData])
-        })
-        .catch((error) => {
-          console.error(
-            `There was a problem with the fetch operation for date ${date}:`,
-            error,
-          )
-        })
-    })
-
-    Promise.all(requests)
-      .then(() => {})
-      .catch((error) => {
-        console.error('One or more Solunar requests failed:', error)
+        return fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok')
+            }
+            return response.json()
+          })
+          .then((data) => ({ ...data, date }))
+          .catch((error) => {
+            console.error(
+              `There was a problem with the fetch operation for date ${date}:`,
+              error,
+            )
+            return null
+          })
       })
+
+      const solunarArray = await Promise.all(solunarRequests)
+
+      setState((prevState) => ({
+        ...prevState,
+        solunarArray: solunarArray.filter((data) => data !== null),
+        isLoading: false,
+      }))
+    } catch (error) {
+      console.error('One or more Solunar requests failed:', error)
+    }
   }
 
-  const fetchWeatherData = () => {
-    fetch(fullURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setWeatherData(data)
-        setState({ ...state, data })
-      })
-      .catch((error) => console.error(error))
-  }
+  useEffect(() => {}, [state.solunarArray])
 
   const handleRefresh = () => {
     fetchWeatherData()
     fetchSolunarData()
   }
 
-  if (!weatherData || solunarArray.length < 7) {
+  const fetchWeatherData = () => {
+    fetch(fullURL)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.forecasts) {
+          setState((prevState) => ({
+            ...prevState,
+            data: data,
+            isLoading: false,
+          }))
+        } else {
+          console.error('Error: Weather data or forecasts are missing.')
+        }
+      })
+      .catch((error) => console.error(error))
+  }
+
+  if (
+    state.isLoading ||
+    !state.data ||
+    !state.data.forecasts ||
+    state.solunarArray.length < 7
+  ) {
     return (
       <div className="loadMain">
         <Loader />
@@ -127,36 +141,31 @@ function App() {
                 embedded={false}
               />
             }
-          ></Route>
+          />
           <Route
             path="/wind"
             element={
               <PageMap state={state} setState={setState} embedded={false} />
             }
-          ></Route>
+          />
           <Route
             path="/embedded/home"
             element={
               <PageHome state={state} setState={setState} embedded={true} />
             }
-          ></Route>
+          />
           <Route
             path="/embedded/wind"
             element={
               <PageMap state={state} setState={setState} embedded={true} />
             }
-          ></Route>
+          />
           <Route
             path="/hourly"
             element={
-              <PageHourly
-                state={state}
-                setState={setState}
-                embedded={false}
-                solunarArray={solunarArray}
-              />
+              <PageHourly state={state} setState={setState} embedded={false} />
             }
-          ></Route>
+          />
         </Routes>
       </div>
     </BrowserRouter>
