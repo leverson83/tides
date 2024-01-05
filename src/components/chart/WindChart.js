@@ -9,7 +9,7 @@ const WindChart = (props) => {
   const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
   const lineArray = props.data.slice(5, 24).map(() => 15)
   const timesArray = props.data
-    .slice(5, 21)
+    .slice(4, 20)
     .map((obj) => moment(obj.dateTime).format('h:mm'))
 
   const options = {

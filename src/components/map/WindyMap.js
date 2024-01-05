@@ -21,7 +21,7 @@ function WindyMap(props) {
     <div className="mapWrapper" ref={mapWrapperRef}>
       <iframe
         id="windy-map"
-        src="https://embed.windy.com/embed2.html?lat=-26.840&lon=153.094&detailLat=-37.816&detailLon=144.967&width=650&height=450&zoom=11&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=24&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
+        src="https://embed.windy.com/embed2.html?lat=-26.840&lon=153.094&detailLat=-37.816&detailLon=144.967&width=650&height=450&zoom=11&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=24&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1&date=2024-02-01"
         frameBorder="0"
       ></iframe>
     </div>

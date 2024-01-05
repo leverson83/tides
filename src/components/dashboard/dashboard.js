@@ -11,12 +11,12 @@ import React, { useEffect } from 'react'
 function Dashboard(props) {
   const { state, setState } = props
   let forecasts = state.data.forecasts
-  let tides = forecasts.tides?.days[state.marker]?.entries
-  let sun = forecasts.sunrisesunset?.days[state.marker]?.entries[0]
-  let temp = forecasts.weather?.days[state.marker]?.entries[0]
-  let rain = forecasts.rainfall?.days[state.marker]?.entries[0]
-  let wind = forecasts.wind?.days[state.marker]?.entries
-  let UV = forecasts.uv.days[state.marker]?.entries
+  let tides = forecasts.tides?.days[state.marker]?.entries || []
+  let sun = forecasts.sunrisesunset?.days[state.marker]?.entries[0] || {}
+  let temp = forecasts.weather?.days[state.marker]?.entries[0] || {}
+  let rain = forecasts.rainfall?.days[state.marker]?.entries[0] || {}
+  let wind = forecasts.wind?.days[state.marker]?.entries || []
+  let UV = forecasts.uv?.days[state.marker]?.entries || []
 
   useEffect(() => {
     setState({ ...state, pageTitle: 'Wind', showNav: true, showDate: true })
