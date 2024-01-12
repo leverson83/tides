@@ -58,7 +58,7 @@
   max-width: calc(100% - 30px)
 }
 
-.windSpeed, .rainProb, .hourlyRating {
+.windSpeed, .rainProb, .hourlyRating, .tideRating {
   position: absolute;
   color: var(--mid-blue);
   z-index: 1;
@@ -76,6 +76,27 @@
 
 .hourlyRating {
   top: 125px;
+}
+
+.tideRating {
+  top: 185px;
+  height: 48px;
+}
+
+.tideRatingBg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-radius: 0 0 5px 5px;
+
+}
+
+.tideRatingIcon {
+  z-index: 2;
+  position: relative;
+  color: white;
 }
 
 .windSpeed .speedo, .rainProb .raino, .hourlyRating .rato {

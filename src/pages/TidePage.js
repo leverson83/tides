@@ -1,15 +1,6 @@
-import './Dashboard.css'
-import '../navigation/nav-layout.css'
-import HourlyTile from '../tile/HourlyTile'
 import React, { useEffect, useState } from 'react'
 
-function Hourly(props) {
-  const { state, setState } = props
-  let forecasts = state.data.forecasts
-  let rainProb =
-    forecasts.rainfallprobability?.days[state.marker]?.entries || {}
-  let wind = forecasts.wind?.days[state.marker]?.entries || []
-  let hourlyRating = state.solunarArray[state.marker].hourlyRating
+const TidePage = ({ state }) => {
   const [dailyData, setDailyData] = useState([])
 
   useEffect(() => {
@@ -79,6 +70,7 @@ function Hourly(props) {
       })
 
       setDailyData(result)
+      console.log(result)
     }
 
     const linearInterpolation = (t1, h1, t2, h2, targetTime) => {
@@ -129,38 +121,50 @@ function Hourly(props) {
     interpolateHourlyTideHeights()
   }, [state])
 
-  const rainProbPadded = []
-  for (let i = 0; i < rainProb.length; i++) {
-    const value = rainProb[i]
-    rainProbPadded.push(value, value, value)
-  }
-
   return (
     <div>
-      <div className="container-fluid hourly">
-        <div className="row">
-          {wind.map((item, index) => {
-            if (index >= 4 && index <= 19) {
-              return (
-                <HourlyTile
-                  key={`hourly-${index}`}
-                  direction={item.direction}
-                  speed={item.speed}
-                  time={item.dateTime}
-                  rain={rainProbPadded[index]}
-                  index={index}
-                  rating={hourlyRating[index]}
-                  tides={dailyData[state.marker]?.entries}
-                />
-              )
-            } else {
-              return null
-            }
-          })}
+      <h2>Tide Page</h2>
+      {dailyData.map((dayData) => (
+        <div key={dayData.day} style={{ color: 'white', marginBottom: '20px' }}>
+          <h3>{dayData.day}</h3>
+          <ul>
+            {dayData.entries.map((entry) => (
+              <li
+                key={`${dayData.day}-${entry.time}`}
+                style={{ color: 'white', marginBottom: '8px' }}
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{
+                    backgroundColor: tideTypeColors[entry.tideType],
+                    display: 'inline-block',
+                    marginRight: '8px',
+                  }}
+                >
+                  {tideIndicators[entry.tideType]}
+                </span>
+                {entry.time}:{' '}
+                {entry.percentage !== undefined && `[${entry.percentage}%] `}
+                {entry.height} meters ({entry.tideType})
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      ))}
     </div>
   )
 }
 
-export default Hourly
+// Define colors for each tide type
+const tideTypeColors = {
+  rising: 'green',
+  falling: 'red',
+}
+
+// Define icons for each tide type
+const tideIndicators = {
+  rising: 'keyboard_double_arrow_up',
+  falling: 'keyboard_double_arrow_down',
+}
+
+export default TidePage

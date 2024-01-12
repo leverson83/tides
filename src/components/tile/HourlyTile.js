@@ -8,6 +8,21 @@ function HourlyTile(props) {
     hour12: true,
   })
 
+  let actualTide = {}
+
+  if (typeof props.tides === 'object' && props.tides !== null) {
+    for (const key in props.tides) {
+      if (Object.prototype.hasOwnProperty.call(props.tides, key)) {
+        const tide = props.tides[key]
+        if (tide.time === props.index) {
+          actualTide = tide
+        }
+      }
+    }
+  } else {
+    console.log('props.tides is not an object or is null')
+  }
+
   return (
     <div className="col-12 col-sm-6 col-lg-3 hourlyWrapper">
       <div className="directionMarker">
@@ -102,6 +117,22 @@ function HourlyTile(props) {
             }}
           >
             {props.rating}
+          </div>
+        </div>
+        <div className="tideRating">
+          <div
+            className="tideRatingBg"
+            style={{
+              height: `${actualTide.percentage}%`,
+              backgroundColor: `${
+                actualTide.tideType === 'rising' ? 'red' : 'green'
+              }`,
+            }}
+          ></div>
+          <div class="tideRatingIcon material-symbols-outlined">
+            {actualTide.tideType === 'rising'
+              ? 'keyboard_double_arrow_up'
+              : 'keyboard_double_arrow_down'}
           </div>
         </div>
       </div>
