@@ -26,6 +26,11 @@ const TideChart = (props) => {
         beginAtZero: false,
       },
     },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   }
 
   const data = {
@@ -46,6 +51,7 @@ const TideChart = (props) => {
 
   return (
     <div className="chartWrapper">
+      <p className="chartTitle">Tides</p>
       <Line data={data} options={options} />
     </div>
   )

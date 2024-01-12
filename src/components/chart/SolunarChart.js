@@ -7,9 +7,11 @@ import moment from 'moment'
 
 const SolunarChart = (props) => {
   const data = Object.values(props.data || {}).map((value) => value)
-  const timesArray = Object.keys(props.data || {}).map((hour) =>
-    moment(hour, 'H').format('HH:mm'),
-  )
+
+  const timesArray = Object.keys(props.data || {})
+    .filter((hour) => parseInt(hour) >= 4 && parseInt(hour) <= 19)
+    .map((hour) => moment(hour, 'H').format('h:mm'))
+
   const lineArray = new Array(timesArray.length).fill(2)
 
   const options = {

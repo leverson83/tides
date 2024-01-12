@@ -31,6 +31,7 @@ function App() {
     showNav: true,
     solunarArray: [],
     isLoading: true,
+    rainProb: [],
   })
 
   useEffect(() => {
@@ -102,11 +103,37 @@ function App() {
     fetch(fullURL)
       .then((response) => response.json())
       .then((data) => {
+        let rainProb = data?.forecasts?.rainfallprobability?.days
+        const rainProbPadded = []
+
+        if (rainProb) {
+          for (let i = 0; i < rainProb.length; i++) {
+            const dayEntry = rainProb[i]
+            const dayEntries = dayEntry.entries
+            const paddedEntries = []
+
+            for (let j = 0; j < dayEntries.length; j++) {
+              const value = dayEntries[j].probability
+              paddedEntries.push(
+                { dateTime: dayEntries[j].dateTime, probability: value },
+                { dateTime: dayEntries[j].dateTime, probability: value },
+                { dateTime: dayEntries[j].dateTime, probability: value },
+              )
+            }
+
+            rainProbPadded.push({
+              dateTime: dayEntry.dateTime,
+              entries: paddedEntries,
+            })
+          }
+        }
+
         if (data && data.forecasts) {
           setState((prevState) => ({
             ...prevState,
             data: data,
             isLoading: false,
+            rainProb: rainProbPadded,
           }))
         } else {
           console.error('Error: Weather data or forecasts are missing.')
