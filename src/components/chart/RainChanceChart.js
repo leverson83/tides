@@ -8,7 +8,23 @@ import { CategoryScale, LinearScale } from 'chart.js'
 const RainChanceChart = (props) => {
   let rainArray = []
   let timesArray = []
-  console.log(props)
+
+  const transformedArray = props.data.flatMap((entry) => {
+    const dateTime = moment(entry.dateTime)
+    return Array.from({ length: 3 }, (_, index) => {
+      const incrementedDateTime = dateTime.clone().add(index, 'hours')
+      return {
+        dateTime: incrementedDateTime.format('YYYY-MM-DD HH:mm:ss'),
+        probability: entry.probability,
+      }
+    })
+  })
+
+  const uniqueTransformedArray = Array.from(
+    new Set(transformedArray.map((entry) => entry.dateTime)),
+    (dateTime) => transformedArray.find((entry) => entry.dateTime === dateTime),
+  )
+
   if (props.data && props.data.length > 0) {
     rainArray = props.data.slice(5, 24).map((obj) => obj.probability)
     timesArray = props.data
@@ -41,11 +57,11 @@ const RainChanceChart = (props) => {
         fill: true,
         borderWidth: 2,
         pointBackgroundColor: (context) =>
-          context.dataset.data[context.dataIndex] > 2
+          context.dataset.data[context.dataIndex] > 15
             ? 'red'
             : 'rgb(75, 192, 192)',
         borderColor: (context) =>
-          context.dataset.data[context.dataIndex] > 2
+          context.dataset.data[context.dataIndex] > 15
             ? 'red'
             : 'rgb(75, 192, 192)',
         tension: 0.5,

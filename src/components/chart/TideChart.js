@@ -5,15 +5,16 @@ import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
 const TideChart = (props) => {
-  const tidesArray = props.data.map((obj) => obj.height)
-  const timesArray = props.data.map((obj) => {
-    const dateTime = new Date(obj.dateTime)
-    const options = {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    }
-    return dateTime.toLocaleTimeString('en-AU', options)
+  // Filter data for times between 4 and 19
+  const filteredData = props.data.filter(
+    (obj) => obj.time >= 4 && obj.time <= 19,
+  )
+
+  // Extract relevant information
+  const tidesArray = filteredData.map((obj) => obj.height)
+  const timesArray = filteredData.map((obj) => {
+    const formattedHour = obj.time % 12 || 12
+    return `${formattedHour}:00`
   })
 
   const options = {
@@ -23,7 +24,7 @@ const TideChart = (props) => {
         labels: timesArray,
       },
       y: {
-        beginAtZero: false,
+        beginAtZero: true,
       },
     },
     plugins: {

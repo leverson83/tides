@@ -19,8 +19,6 @@ function HourlyTile(props) {
         }
       }
     }
-  } else {
-    console.log('props.tides is not an object or is null')
   }
 
   return (
@@ -129,7 +127,7 @@ function HourlyTile(props) {
               }`,
             }}
           ></div>
-          <div class="tideRatingIcon material-symbols-outlined">
+          <div className="tideRatingIcon material-symbols-outlined">
             {actualTide.tideType === 'rising'
               ? 'keyboard_double_arrow_up'
               : 'keyboard_double_arrow_down'}
