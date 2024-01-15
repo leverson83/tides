@@ -1,26 +1,14 @@
 import './Dashboard.css'
 import '../navigation/nav-layout.css'
 import HourlyTile from '../tile/HourlyTile'
-import React, { useEffect } from 'react'
 
 function Hourly(props) {
   const { state, setState } = props
   let forecasts = state.data.forecasts
-  let rainProb =
-    forecasts.rainfallprobability?.days[state.marker]?.entries || {}
+  let rainProb = state.rainProb[state.marker]?.entries || {}
   let wind = forecasts.wind?.days[state.marker]?.entries || []
   let hourlyRating = state.solunarArray[state.marker].hourlyRating
-
-  useEffect(() => {
-    setState({ ...state, pageTitle: 'Hourly', showNav: true, showDate: true })
-    document.title = `Golden Tides | Hourly`
-  }, [])
-
-  const rainProbPadded = []
-  for (let i = 0; i < rainProb.length; i++) {
-    const value = rainProb[i]
-    rainProbPadded.push(value, value, value)
-  }
+  let tides = state.tidesPadded[state.marker]?.entries || []
 
   return (
     <div>
@@ -34,9 +22,10 @@ function Hourly(props) {
                   direction={item.direction}
                   speed={item.speed}
                   time={item.dateTime}
-                  rain={rainProbPadded[index]}
+                  rain={rainProb[index]}
                   index={index}
                   rating={hourlyRating[index]}
+                  tides={tides}
                 />
               )
             } else {

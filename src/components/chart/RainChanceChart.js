@@ -2,25 +2,34 @@ import './Charts.css'
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
+import moment from 'moment'
 import { CategoryScale, LinearScale } from 'chart.js'
 
 const RainChanceChart = (props) => {
-  let UVArray = []
+  let rainArray = []
   let timesArray = []
 
-  if (props.data && props.data.length > 0) {
-    UVArray = props.data.map((obj) => obj.index)
-    timesArray = props.data.map((obj) => {
-      const dateTime = new Date(obj.dateTime)
-      const options = {
-        hour12: true,
-        hour: 'numeric',
-        minute: '2-digit',
+  const transformedArray = props.data.flatMap((entry) => {
+    const dateTime = moment(entry.dateTime)
+    return Array.from({ length: 3 }, (_, index) => {
+      const incrementedDateTime = dateTime.clone().add(index, 'hours')
+      return {
+        dateTime: incrementedDateTime.format('YYYY-MM-DD HH:mm:ss'),
+        probability: entry.probability,
       }
-      const timeString = dateTime.toLocaleTimeString('en-AU', options)
-
-      return timeString.replace('am', '').replace('pm', '')
     })
+  })
+
+  const uniqueTransformedArray = Array.from(
+    new Set(transformedArray.map((entry) => entry.dateTime)),
+    (dateTime) => transformedArray.find((entry) => entry.dateTime === dateTime),
+  )
+
+  if (props.data && props.data.length > 0) {
+    rainArray = props.data.slice(5, 24).map((obj) => obj.probability)
+    timesArray = props.data
+      .slice(4, 20)
+      .map((obj) => moment(obj.dateTime).format('h:mm'))
   }
 
   const options = {
@@ -30,7 +39,12 @@ const RainChanceChart = (props) => {
         labels: timesArray,
       },
       y: {
-        beginAtZero: false,
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
       },
     },
   }
@@ -39,18 +53,18 @@ const RainChanceChart = (props) => {
     datasets: [
       {
         label: 'Rain Chance',
-        data: UVArray,
+        data: rainArray,
         fill: true,
         borderWidth: 2,
         pointBackgroundColor: (context) =>
-          context.dataset.data[context.dataIndex] > 2
+          context.dataset.data[context.dataIndex] > 15
             ? 'red'
             : 'rgb(75, 192, 192)',
         borderColor: (context) =>
-          context.dataset.data[context.dataIndex] > 2
+          context.dataset.data[context.dataIndex] > 15
             ? 'red'
             : 'rgb(75, 192, 192)',
-        tension: 0.4,
+        tension: 0.5,
       },
     ],
   }
@@ -61,6 +75,7 @@ const RainChanceChart = (props) => {
 
   return (
     <div className="chartWrapper">
+      <p className="chartTitle">Rain Chance</p>
       <Line data={data} options={options} />
     </div>
   )

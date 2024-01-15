@@ -6,18 +6,21 @@ import TempTile from '../tile/TempTile'
 import RainTile from '../tile/RainTile'
 import WindChart from '../chart/WindChart'
 import SolunarChart from '../chart/SolunarChart'
+import RainChanceChart from '../chart/RainChanceChart'
 import React, { useEffect } from 'react'
+import TideChart from '../chart/TideChart'
 
 function Dashboard(props) {
   const { state, setState } = props
   let forecasts = state.data.forecasts
   let tides = forecasts.tides?.days[state.marker]?.entries || []
+  let tidesPadded = state.tidesPadded[state.marker]?.entries || {}
   let sun = forecasts.sunrisesunset?.days[state.marker]?.entries[0] || {}
   let temp = forecasts.weather?.days[state.marker]?.entries[0] || {}
   let rain = forecasts.rainfall?.days[state.marker]?.entries[0] || {}
   let wind = forecasts.wind?.days[state.marker]?.entries || []
-  let UV = forecasts.uv?.days[state.marker]?.entries || []
   let hourlyRating = state.solunarArray[state.marker]?.hourlyRating || {}
+  let rainProb = state.rainProb[state.marker]?.entries || {}
 
   useEffect(() => {
     setState({
@@ -43,6 +46,12 @@ function Dashboard(props) {
         <WindChart data={wind} />
       </div>
       <div className="tile tile-10">
+        <RainChanceChart data={rainProb} />
+      </div>
+      <div className="tile tile-11">
+        <TideChart data={tidesPadded} />
+      </div>
+      <div className="tile tile-12">
         <SolunarChart data={hourlyRating} />
       </div>
     </div>
