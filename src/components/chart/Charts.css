@@ -1,0 +1,17 @@
+.chartWrapper {
+  width: 100%;
+  max-height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--gutters);
+  padding-bottom: var(--gutters);
+  padding-top: 30px;
+  position: relative;
+}
+
+.chartTitle {
+  position: absolute;
+  top: 5px;
+  color: #666666;
+}

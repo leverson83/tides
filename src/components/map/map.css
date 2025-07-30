@@ -1,0 +1,13 @@
+.mapWrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: calc(100% - 30px);
+  height: 550px;
+  overflow: hidden;
+  margin: var(--gutters)
+}
+
+.content.embedded .mapWrapper {
+  height: calc(100vh - 30px);
+}

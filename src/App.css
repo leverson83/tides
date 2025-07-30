@@ -1,0 +1,15 @@
+:root {
+	--black: #191a21;
+	--dark-grey: #24252b;
+	--mid-blue: #048bfe;
+	--red: red;
+	--orange: orange;
+	--border-color: #191a21;
+  --teal: #00B8AA;
+	--gutters: 15px;
+}
+
+body {
+  background-color: var(--black);
+	overflow-x: hidden;
+}

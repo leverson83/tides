@@ -1,0 +1,138 @@
+/* Btn-nav*/
+.btn-custom {
+  display: block;
+  height: 100%;
+  color: #fff;
+  background-color: var(--mid-blue);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-custom:hover {
+  filter: brightness(0.8);
+}
+
+.btn-inner {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.btn-disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+/* Side nav */
+.sideNav {
+  padding-left: var(--gutters);
+  padding-top: var(--gutters);
+}
+
+.sideNav a {
+  text-decoration: none;
+}
+
+.sideNav a:hover {
+  filter: brightness(0.8);
+}
+
+.sideNavItem {
+  background-color: var(--mid-blue);
+  margin-bottom: var(--gutters);
+  height: 60px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.sideNavItem span {
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+/*TopNav */
+.topNav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 15px;
+  grid-row-gap: 0px;
+  height: 100%;
+  padding-right: 15px;
+  padding-top: 15px;
+}
+
+.topNavMid { grid-area: 1 / 1 / 1 / 3; }
+.topNavRight { grid-area: 1 / 3 / 1 / 5; }
+
+.topNavMid {
+  text-align: left;
+  color: #fff;
+  border: 1px solid var(--mid-blue);
+  border-radius: 5px;
+}
+
+.topNav h4, .topNav p {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  display: inline-block;
+  padding: 5px;
+}
+
+.topNavRight {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skipToDay {
+  flex: 1;
+  color: #fff;
+  border: 1px solid var(--mid-blue);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.skipToDay:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.skipToDay:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.skipToDay:hover {
+  background-color: var(--mid-blue);
+}
+
+.skipToDay.active {
+  background-color: var(--mid-blue);
+}
+
+.dayRating {
+  position: absolute;
+  font-size: 12px;
+  border: 1px solid var(--mid-blue);
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;;
+}
+
+.dayRating.morning {
+  top: 2px;
+}
+
+.dayRating.afternoon {
+  bottom: 2px;
+}
+
+  
