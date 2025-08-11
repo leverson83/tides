@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: Golden Tides
+    container_name: golden-tides
     restart: unless-stopped
     ports:
       - "${PORT:-3000}:3000"
@@ -12,6 +12,11 @@ services:
       - TZ=${TZ:-UTC}
     volumes:
       - ${DATA_PATH}/tides/:/app/logs
+    labels:
+      - "homarr.name=Golden Tides"
+      - "homarr.description=Tide Information App"
+      - "homarr.icon=https://cdn-icons-png.flaticon.com/512/3144/3144456.png"
+      - "traefik.enable=false"
     networks:
       - app-network
 
