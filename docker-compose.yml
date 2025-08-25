@@ -13,8 +13,8 @@ services:
     volumes:
       - ${DATA_PATH}/tides/:/app/logs
     networks:
-      - app-network
+      - homelab-network
 
 networks:
-  app-network:
-    driver: bridge
+  homelab-network:
+    external: true
