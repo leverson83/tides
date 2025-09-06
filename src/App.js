@@ -55,29 +55,42 @@ function App() {
         return fetch(url)
           .then((response) => {
             if (!response.ok) {
-              throw new Error('Network response was not ok')
+              throw new Error(`Solunar API error: ${response.status} ${response.statusText}`)
             }
             return response.json()
           })
           .then((data) => ({ ...data, date }))
           .catch((error) => {
-            console.error(
-              `There was a problem with the fetch operation for date ${date}:`,
-              error,
+            console.warn(
+              `Solunar API unavailable for date ${date}:`,
+              error.message,
             )
             return null
           })
       })
 
       const solunarArray = await Promise.all(solunarRequests)
+      const validSolunarData = solunarArray.filter((data) => data !== null)
 
+      // Update state regardless of Solunar API success/failure
       setState((prevState) => ({
         ...prevState,
-        solunarArray: solunarArray.filter((data) => data !== null),
+        solunarArray: validSolunarData,
         isLoading: false,
       }))
+
+      // Log if Solunar data is completely unavailable
+      if (validSolunarData.length === 0) {
+        console.warn('Solunar API is currently unavailable. App will continue without solunar data.')
+      }
     } catch (error) {
-      console.error('One or more Solunar requests failed:', error)
+      console.error('Solunar API requests failed:', error)
+      // Still update state to stop loading even if Solunar fails
+      setState((prevState) => ({
+        ...prevState,
+        solunarArray: [],
+        isLoading: false,
+      }))
     }
   }
 
@@ -311,8 +324,7 @@ function App() {
   if (
     state.isLoading ||
     !state.data ||
-    !state.data.forecasts ||
-    state.solunarArray.length < 7
+    !state.data.forecasts
   ) {
     return (
       <div className="loadMain">
