@@ -112,6 +112,9 @@ function App() {
       const proxy = API_CONFIG.proxies[proxyIndex]
       const url = buildAPIUrl(proxy)
       
+      console.log(`Trying API call ${proxyIndex + 1}/${API_CONFIG.proxies.length}:`, proxy ? `Proxy: ${proxy}` : 'Direct API call')
+      console.log('URL:', url)
+      
       fetch(url)
         .then((response) => {
           if (!response.ok) {
@@ -283,16 +286,20 @@ function App() {
         }
       })
         .catch((error) => {
+          console.error(`API call ${proxyIndex + 1} failed:`, error.message)
           // Try next proxy or fallback
           if (proxyIndex < API_CONFIG.proxies.length - 1) {
+            console.log(`Trying next proxy...`)
             tryAPI(proxyIndex + 1)
           } else {
             // All proxies failed, try fallback data
+            console.log('All API proxies failed, using fallback data...')
             import('./data/weather-api.json')
               .then((module) => {
                 const fallbackData = module.default
                 
                 if (fallbackData && fallbackData.forecasts) {
+                  console.log('Using fallback weather data')
                   setState((prevState) => ({
                     ...prevState,
                     data: fallbackData,
@@ -301,6 +308,7 @@ function App() {
                     tidesPadded: [],
                   }))
                 } else {
+                  console.error('Fallback data is invalid')
                   setState((prevState) => ({
                     ...prevState,
                     isLoading: false,
@@ -308,6 +316,7 @@ function App() {
                 }
               })
               .catch((importError) => {
+                console.error('Failed to load fallback data:', importError)
                 setState((prevState) => ({
                   ...prevState,
                   isLoading: false,
