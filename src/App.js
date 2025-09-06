@@ -23,8 +23,22 @@ function App() {
   })
 
   useEffect(() => {
+    // Add global error handler for unhandled promise rejections
+    const handleUnhandledRejection = (event) => {
+      console.error('Unhandled promise rejection:', event.reason)
+      // Prevent the default behavior of logging to console
+      event.preventDefault()
+    }
+    
+    window.addEventListener('unhandledrejection', handleUnhandledRejection)
+    
     fetchWeatherData()
     fetchSolunarData()
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection)
+    }
   }, [])
 
   const fetchSolunarData = async () => {
@@ -52,7 +66,15 @@ function App() {
         const { lat, lon, date, hour } = coord
         const url = `https://api.solunar.org/solunar/${lat},${lon},${date},${hour}`
 
-        return fetch(url)
+        // Add timeout to prevent hanging
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Solunar API timeout')), 10000)
+        })
+
+        return Promise.race([
+          fetch(url),
+          timeoutPromise
+        ])
           .then((response) => {
             if (!response.ok) {
               throw new Error(`Solunar API error: ${response.status} ${response.statusText}`)
@@ -106,6 +128,15 @@ function App() {
     const timestamp = new Date()
     const formattedTimestamp = timestamp.toLocaleString()
     localStorage.setItem('timestamp', formattedTimestamp)
+    
+    // Set a maximum timeout to ensure app loads even if all APIs fail
+    const maxTimeout = setTimeout(() => {
+      console.warn('Maximum timeout reached, forcing app to load with fallback data')
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }))
+    }, 30000) // 30 second timeout
     
     // Try multiple proxies and direct API call
     const tryAPI = (proxyIndex = 0) => {
@@ -273,6 +304,9 @@ function App() {
             // Save to localStorage
             localStorage.setItem('weather-data', JSON.stringify(data))
             
+          // Clear the timeout since we got data
+          clearTimeout(maxTimeout)
+          
           interpolateHourlyTideHeights()
           setState((prevState) => ({
             ...prevState,
@@ -300,6 +334,7 @@ function App() {
                 
                 if (fallbackData && fallbackData.forecasts) {
                   console.log('Using fallback weather data')
+                  clearTimeout(maxTimeout)
                   setState((prevState) => ({
                     ...prevState,
                     data: fallbackData,
@@ -309,6 +344,7 @@ function App() {
                   }))
                 } else {
                   console.error('Fallback data is invalid')
+                  clearTimeout(maxTimeout)
                   setState((prevState) => ({
                     ...prevState,
                     isLoading: false,
@@ -317,6 +353,7 @@ function App() {
               })
               .catch((importError) => {
                 console.error('Failed to load fallback data:', importError)
+                clearTimeout(maxTimeout)
                 setState((prevState) => ({
                   ...prevState,
                   isLoading: false,
