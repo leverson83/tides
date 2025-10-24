@@ -6,9 +6,19 @@ import { CategoryScale, LinearScale } from 'chart.js'
 import moment from 'moment'
 
 const SolunarChart = (props) => {
-  const data = Object.values(props.data || {}).map((value) => value)
+  // Add safety checks for data
+  if (!props.data || typeof props.data !== 'object') {
+    return (
+      <div className="chartWrapper">
+        <p className="chartTitle">Bite Times</p>
+        <p>No solunar data available</p>
+      </div>
+    )
+  }
 
-  const timesArray = Object.keys(props.data || {})
+  const data = Object.values(props.data).map((value) => value)
+
+  const timesArray = Object.keys(props.data)
     .filter((hour) => parseInt(hour) >= 4 && parseInt(hour) <= 19)
     .map((hour) => moment(hour, 'H').format('h:mm'))
 

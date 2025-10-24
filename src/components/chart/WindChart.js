@@ -6,6 +6,16 @@ import { CategoryScale, LinearScale } from 'chart.js'
 import moment from 'moment'
 
 const WindChart = (props) => {
+  // Add safety checks for data
+  if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
+    return (
+      <div className="chartWrapper">
+        <p className="chartTitle">Wind Speed</p>
+        <p>No wind data available</p>
+      </div>
+    )
+  }
+
   const speedsArray = props.data.slice(5, 24).map((obj) => obj.speed)
   const lineArray = props.data.slice(5, 24).map(() => 15)
   const timesArray = props.data

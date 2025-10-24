@@ -10,14 +10,22 @@ const UVChart = (props) => {
   let timesArray = []
   let lineArray = []
 
-  if (props.data && props.data.length > 0) {
-    UVArray = props.data.map((obj) => obj.index)
-    lineArray = props.data.map(() => 2)
-    timesArray = props.data.map((obj) => {
-      const dateTime = moment(obj.dateTime)
-      return dateTime.format('h:mm')
-    })
+  // Add safety checks for data
+  if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
+    return (
+      <div className="chartWrapper">
+        <p className="chartTitle">UV Index</p>
+        <p>No UV data available</p>
+      </div>
+    )
   }
+
+  UVArray = props.data.map((obj) => obj.index)
+  lineArray = props.data.map(() => 2)
+  timesArray = props.data.map((obj) => {
+    const dateTime = moment(obj.dateTime)
+    return dateTime.format('h:mm')
+  })
 
   const options = {
     scales: {

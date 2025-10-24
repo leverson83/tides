@@ -9,6 +9,16 @@ const RainChanceChart = (props) => {
   let rainArray = []
   let timesArray = []
 
+  // Add safety checks for data
+  if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
+    return (
+      <div className="chartWrapper">
+        <p className="chartTitle">Rain Chance</p>
+        <p>No rain data available</p>
+      </div>
+    )
+  }
+
   const transformedArray = props.data.flatMap((entry) => {
     const dateTime = moment(entry.dateTime)
     return Array.from({ length: 3 }, (_, index) => {
