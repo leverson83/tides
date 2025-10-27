@@ -6,6 +6,11 @@ import { CategoryScale, LinearScale } from 'chart.js'
 import moment from 'moment'
 
 const SolunarChart = (props) => {
+  // Register Chart.js components - must be called before any early returns
+  React.useEffect(() => {
+    Chart.register(CategoryScale, LinearScale)
+  }, [])
+
   // Add safety checks for data
   if (!props.data || typeof props.data !== 'object') {
     return (
@@ -70,10 +75,6 @@ const SolunarChart = (props) => {
       },
     ],
   }
-
-  React.useEffect(() => {
-    Chart.register(CategoryScale, LinearScale)
-  }, [])
 
   return (
     <div className="chartWrapper">

@@ -6,6 +6,11 @@ import moment from 'moment'
 import { CategoryScale, LinearScale } from 'chart.js'
 
 const RainChanceChart = (props) => {
+  // Register Chart.js components - must be called before any early returns
+  React.useEffect(() => {
+    Chart.register(CategoryScale, LinearScale)
+  }, [])
+
   let rainArray = []
   let timesArray = []
 
@@ -78,10 +83,6 @@ const RainChanceChart = (props) => {
       },
     ],
   }
-
-  React.useEffect(() => {
-    Chart.register(CategoryScale, LinearScale)
-  }, [])
 
   return (
     <div className="chartWrapper">
