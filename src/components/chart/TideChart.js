@@ -5,6 +5,11 @@ import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
 const TideChart = (props) => {
+  // Register Chart.js components - must be called before any early returns
+  React.useEffect(() => {
+    Chart.register(CategoryScale, LinearScale)
+  }, [])
+
   // Add safety checks for data - ensure it's an array
   if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
     return (
@@ -55,10 +60,6 @@ const TideChart = (props) => {
       },
     ],
   }
-
-  React.useEffect(() => {
-    Chart.register(CategoryScale, LinearScale)
-  }, [])
 
   return (
     <div className="chartWrapper">

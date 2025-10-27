@@ -6,6 +6,11 @@ import { CategoryScale, LinearScale } from 'chart.js'
 import moment from 'moment'
 
 const WindChart = (props) => {
+  // Register Chart.js components - must be called before any early returns
+  React.useEffect(() => {
+    Chart.register(CategoryScale, LinearScale)
+  }, [])
+
   // Add safety checks for data
   if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
     return (
@@ -68,10 +73,6 @@ const WindChart = (props) => {
       },
     ],
   }
-
-  React.useEffect(() => {
-    Chart.register(CategoryScale, LinearScale)
-  }, [])
 
   return (
     <div className="chartWrapper">
