@@ -9,7 +9,7 @@ const RainChanceChart = (props) => {
   let rainArray = []
   let timesArray = []
 
-  // Add safety checks for data
+  // Add safety checks for data - ensure it's an array
   if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
     return (
       <div className="chartWrapper">

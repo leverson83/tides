@@ -14,13 +14,13 @@ function Dashboard(props) {
   const { state, setState } = props
   let forecasts = state.data.forecasts
   let tides = forecasts.tides?.days[state.marker]?.entries || []
-  let tidesPadded = state.tidesPadded[state.marker]?.entries || {}
+  let tidesPadded = state.tidesPadded[state.marker]?.entries || []
   let sun = forecasts.sunrisesunset?.days[state.marker]?.entries[0] || {}
   let temp = forecasts.weather?.days[state.marker]?.entries[0] || {}
   let rain = forecasts.rainfall?.days[state.marker]?.entries[0] || {}
   let wind = forecasts.wind?.days[state.marker]?.entries || []
   let hourlyRating = state.solunarArray[state.marker]?.hourlyRating || {}
-  let rainProb = state.rainProb[state.marker]?.entries || {}
+  let rainProb = state.rainProb[state.marker]?.entries || []
 
   useEffect(() => {
     setState({

@@ -5,7 +5,7 @@ import Chart from 'chart.js/auto'
 import { CategoryScale, LinearScale } from 'chart.js'
 
 const TideChart = (props) => {
-  // Add safety checks for data
+  // Add safety checks for data - ensure it's an array
   if (!props.data || !Array.isArray(props.data) || props.data.length === 0) {
     return (
       <div className="chartWrapper">
